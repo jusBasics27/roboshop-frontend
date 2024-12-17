@@ -1,0 +1,39 @@
+
+name: Dev Branch Pipeline
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
+run-name: ${{ github.sha }} | ${{ github.event.head_commit.message }}
+
+
+#******Original Code**********
+#jobs:
+##  build:
+##    runs-on: self-hosted
+##    steps:
+##      - uses: actions/checkout@v4
+##      - run: |
+##          echo
+##
+#
+#  tests:
+#    runs-on: self-hosted
+#    steps:
+#      - uses: actions/checkout@v4
+#      - run: |
+#          echo npm test
+#
+## Im commenting out the build becoz once the code is developed the tests [Unit tests] gonna run in dev branch, No build is required
+
+#*************Modified code to call github-resuable-actions code*************
+#The Above code is moved to github-reusable-actions and now calling it here for resuable purpose
+jobs:
+  call-workflow:
+    uses: jusBasics27/github-reusable-actions/.github/workflows/ci-dev-branch.yml@main
+    with:
+      componentName: frontend
+
+

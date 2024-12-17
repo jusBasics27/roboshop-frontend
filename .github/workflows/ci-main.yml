@@ -1,0 +1,84 @@
+name: Main Branch Pipeline
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+run-name: ${{ github.sha }} | ${{ github.event.head_commit.message }}
+jobs:
+#***********original Code***********
+## Once the code is developed the Unit test is performed, then build happens
+#  UNIT-Tests:
+#    runs-on: self-hosted
+#    steps:
+#      - uses: actions/checkout@v4
+#      - run: |
+#          echo npm tests
+#
+#  build:
+#    runs-on: self-hosted
+#    needs: UNIT-Tests  # needs like depends on
+#    steps:
+#      - uses: actions/checkout@v4
+#      - run: |
+#          echo
+#
+##After unit test is passed, build is performed. and then deployed in Dev env, followed by QA
+#  dev:
+#    runs-on: self-hosted
+#    needs: build
+#    environment: dev # created an 'Environment' in github settings of roboshop-cart project and for each env , i give the approval rights.
+#    steps:
+#      - uses: actions/checkout@v4
+#      - run: |
+#          echo
+#
+#  qa:
+#    runs-on: self-hosted
+#    needs: dev
+#    environment: qa
+#    steps:
+#      - uses: actions/checkout@v4
+#      - run: |
+#          echo
+#
+#  E2E-Tests:
+#    runs-on: self-hosted
+#    needs: qa
+#    environment: qa
+#    steps:
+#      - uses: actions/checkout@v4
+#      - run: |
+#          echo
+#
+#  UAT:
+#    runs-on: self-hosted
+#    needs: E2E-Tests
+#    environment: UAT
+#    steps:
+#      - uses: actions/checkout@v4
+#      - run: |
+#          echo
+#
+#
+#  prod:
+#    runs-on: self-hosted
+#    needs: UAT
+#    environment: prod
+#    steps:
+#      - uses: actions/checkout@v4
+#      - run: |
+#          echo
+#
+#
+##run-name: ${{ github.sha }} | ${{ github.event.head_commit.message }} --> THis is will give coomit id + comments in pipiline
+#*********** Modified code to call github-resuable-actions code************
+
+
+#  call-workflow:
+#    uses: jusBasics27/github-reusable-actions/.github/workflows/ci-main.yml@main
+
+  ci-step:
+    uses: jusBasics27/github-reusable-actions/.github/workflows/ci-main.yml@main
+    with:
+      componentName: frontend
